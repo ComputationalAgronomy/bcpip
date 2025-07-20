@@ -5,8 +5,7 @@ import numpy as np
 import pandas as pd
 
 from bcpip.modules.existence_score_model import existence_score_model
-from bcpip.modules.pathway import (Enzyme, PathwayNode, enzyme_dict,
-                                         pathway_dict)
+from bcpip.modules.pathway import Enzyme, PathwayNode, enzyme_dict, pathway_dict
 
 
 def start_match_enzyme(filepath: Union[str, Path],

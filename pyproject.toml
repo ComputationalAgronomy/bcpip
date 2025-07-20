@@ -52,3 +52,17 @@ test = ["pytest>=7.1.2"]
 pythonpath = ["src"]
 testpaths = ["tests"]
 addopts = ["-ra", "-v", "--color=yes", "--strict-markers", "--cov=bcpip"]
+
+[tool.black]
+line-length = 127
+target-version = ["py310", "py311", "py312", "py313"]
+
+
+[tool.isort]
+profile = "black"
+line_length = 127
+
+
+[tool.flake8]
+max-line-length = 127
+max-complexity = 10

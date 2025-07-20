@@ -10,6 +10,7 @@ try:
 except ImportError:
     import tomli as tomllib  # Python < 3.11
 
+
 class Configuration:
     """Configure input and output path, and check parameters.
 
@@ -70,7 +71,7 @@ class Configuration:
         Args:
             type: The name of the module to be executed.
         """
-        if self.type == module or self.type == "main":
+        if self.type in {module, "main"}:
             self.input_path = Path(self.args.input).resolve()
         else:
             # If the above condition is not satisfied, it means the input

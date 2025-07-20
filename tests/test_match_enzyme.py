@@ -1,6 +1,4 @@
-from bcpip.modules.match_enzyme import (match_enzyme_existence,
-                                              reset_enzyme_and_pathway,
-                                              traverse_enzyme_reaction)
+from bcpip.modules.match_enzyme import match_enzyme_existence, reset_enzyme_and_pathway, traverse_enzyme_reaction
 from bcpip.modules.pathway import enzyme_dict, pathway_dict
 
 
@@ -20,6 +18,5 @@ def test_traverse_enzyme_reaction():
             enzyme_dict[i].set_count(enzyme_num[i - 1])
     traverse_enzyme_reaction(pathway_dict[1], enzyme_dict, pathway_dict)
     expected = [True, False, True, True, True, False, False, False]
-    assert_list = [pathway_dict[i].visited == expected[i - 1]
-                   for i in range(1, 9)]
+    assert_list = [pathway_dict[i].visited == expected[i - 1] for i in range(1, 9)]
     assert all(assert_list)

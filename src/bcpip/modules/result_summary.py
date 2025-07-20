@@ -5,7 +5,7 @@ from typing import List, Literal
 import numpy as np
 
 
-class Result():
+class Result:
     """Parse and store the result from the output of match_enzyme module"""
 
     total_compound_dict = defaultdict(list)
@@ -61,9 +61,11 @@ def write_summary(data_dict: dict, type: Literal["compound", "enzyme"], output_p
     with open(output_path / f"{type}_output.csv", "w") as f:
         f.write(f"{type}_key,{type}_value,max,min,mean,stdev\n")
         for key, value in data_dict.items():
-            f.write(f"{key},{round(sum(value), 6)},{max(value)},"
-                    f"{min(value)},{round(np.mean(value), 6)},"
-                    f"{round(np.std(value, ddof=1), 6)}\n")
+            f.write(
+                f"{key},{round(sum(value), 6)},{max(value)},"
+                f"{min(value)},{round(np.mean(value), 6)},"
+                f"{round(np.std(value, ddof=1), 6)}\n"
+            )
 
 
 def write_prediction(result_list: List[Result], output_path: Path):
@@ -100,7 +102,5 @@ def result_summary(path: Path, output_path: Path):
     write_summary(Result.total_compound_dict, "compound", output_path)
     write_summary(Result.total_enzyme_dict, "enzyme", output_path)
     # Sort by score then species name
-    result_list.sort(
-        key=lambda obj: (-obj.compound_dict["iaa"], obj.name.rsplit(".", 1)[0])
-    )
+    result_list.sort(key=lambda obj: (-obj.compound_dict["iaa"], obj.name.rsplit(".", 1)[0]))
     write_prediction(result_list, output_path)
