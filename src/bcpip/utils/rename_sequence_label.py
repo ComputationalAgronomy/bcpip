@@ -5,7 +5,7 @@ path to tell what the filenames are changed to.
 
 Usage
 -----
-$ python rename_sequence_label.py INPUT_DIR FILE_EXTENSION_IN_INPUT_DIR 
+$ python rename_sequence_label.py INPUT_DIR FILE_EXTENSION_IN_INPUT_DIR
   [RENAME_DIR] [FILE_EXTENSION_IN_RENAME_DIR]
 
 Examples
@@ -18,13 +18,14 @@ $ python rename_sequence_label.py folder_with_sequences fna \
   folder_with_files_to_be_renamed txt
 
 """
+
 import glob
 import os
 import re
 import sys
 
 # non-greedy search
-REGEX_SPECIES = re.compile(r'seqhdr=\"(.*?)\"')
+REGEX_SPECIES = re.compile(r"seqhdr=\"(.*?)\"")
 
 input_dir = sys.argv[1]
 input_type = sys.argv[2]

@@ -1,8 +1,8 @@
+import os
 import re
 import sys
-import os
-from Bio.Blast import NCBIXML
 
+from Bio.Blast import NCBIXML
 
 # csv column title
 HEADER_ELEMENT = ["id", "start", "end", "alignment_id", "enzyme_id",

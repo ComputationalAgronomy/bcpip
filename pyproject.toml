@@ -4,37 +4,66 @@ build-backend = "hatchling.build"
 
 
 [project]
-name = "biopathpred"
-version = "1.1"
+name = "bcpip"
+version = "1.1.1"
 authors = [
-  { name = "Zheng-Xiang Ye", email="b07613010@ntu.edu.tw"},
-  { name="Steven Wu", email="stevenwu@ntu.edu.tw" },
+  { name = "Zheng-Xiang Ye", email = "b07613010@ntu.edu.tw" },
+  { name = "Steven Wu", email = "stevenwu@ntu.edu.tw" },
 ]
-description = "A tool for predicting metabolic pathways from genomic data."
+description = "A bioinformatics pipeline to predict a bacterium's potential to produce specific biological compounds by mapping its genome against known metabolic pathways."
 readme = "README.md"
 license-files = ["LICEN[CS]E*"]
 requires-python = ">=3.10"
 classifiers = [
-    "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
 ]
+keywords = [
+  "bioinformatics",
+  "genomics",
+  "metabolic pathway",
+  "biological compound",
+  "prediction model",
+]
+
 dependencies = [
   "tqdm",
   "biopython",
-  "numpy>=1.23.5,<2.0.0",
-  "pandas>=1.5.2,<2.0.0",
-  "tomli>=2.0.1"
+  "numpy",
+  "pandas",
+  "tomli>=2.0.1; python_version < '3.11'",
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/ComputationalAgronomy/biopathway-prediction"
-"Issues" = "https://github.com/ComputationalAgronomy/biopathway-prediction/issues"
+"Homepage" = "https://github.com/ComputationalAgronomy/bcpip"
+"Issues" = "https://github.com/ComputationalAgronomy/bcpip/issues"
 
 [project.scripts]
-biopathpred = "biopathpred.cli:main"
+bcpip = "bcpip.bcpip:main"
 
 [project.optional-dependencies]
-test = [
-    "pytest>=7.1.2",
-]
+test = ["pytest", "pytest-cov", ]
+dev = ["bcpip[test]", "black", "isort", "flake8", "mypy"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = ["-ra", "-v", "--color=yes", "--strict-markers", "--cov=bcpip"]
+
+[tool.black]
+line-length = 127
+target-version = ["py310", "py311", "py312", "py313"]
+
+
+[tool.isort]
+profile = "black"
+line_length = 127
+
+
+[tool.flake8]
+max-line-length = 127
+max-complexity = 10

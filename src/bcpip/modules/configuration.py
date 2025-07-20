@@ -5,7 +5,10 @@ from pathlib import Path
 from shutil import rmtree
 from typing import List, Literal, Union
 
-import tomli
+try:
+    import tomllib  # Python 3.11+
+except ImportError:
+    import tomli as tomllib  # Python < 3.11
 
 
 class Configuration:
@@ -68,7 +71,7 @@ class Configuration:
         Args:
             type: The name of the module to be executed.
         """
-        if self.type == module or self.type == "main":
+        if self.type in {module, "main"}:
             self.input_path = Path(self.args.input).resolve()
         else:
             # If the above condition is not satisfied, it means the input
@@ -129,15 +132,14 @@ class Configuration:
     def _get_base_path(self):
         """Determine the base output path.
 
-        If the output path is specified by the user, it will be the base path;
-        otherwise the output path will be the root directory of biopathpred
-        package.
+        If the output path is not specified by the user, it will be created
+        in the current working directory.
         """
         try:
             base_path = Path(self.args.output).resolve()
         except TypeError:
             # Raised when the user doesn't specify the output path.
-            base_path = Path("./biopathpred_output")
+            base_path = Path("./bcpip_output")
 
         return base_path
 
@@ -225,7 +227,7 @@ class Configuration:
                 self.logger.info(f"Load configs from {config_path}")
                 self.config_path = config_path
                 with open(config_path, "rb") as f:
-                    return tomli.load(f)
+                    return tomllib.load(f)
 
         raise FileNotFoundError(
             "config.toml not found in current or any parent directories."
