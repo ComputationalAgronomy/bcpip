@@ -4,7 +4,7 @@ from typing import Dict, List, Literal, Union
 import numpy as np
 import pandas as pd
 
-from bcpip.modules.existence_score_model import existence_score_model
+from bcpip.modules.existence_score_model import CalculateScoreLogistic
 from bcpip.modules.pathway import Enzyme, PathwayNode, enzyme_dict, pathway_dict
 
 
@@ -61,7 +61,8 @@ def match_enzyme_existence(filepath: Union[str, Path],
     """
     data = pd.read_csv(filepath, usecols=["enzyme_id", "identity"])
     data = data[data["enzyme_id"] != "-"]
-    data["existence_score"] = existence_score_model(data["identity"])
+    score_model = CalculateScoreLogistic()
+    data["existence_score"] = score_model(data["identity"])
     data = data.groupby("enzyme_id").agg(
         count=("enzyme_id", "count"),
         prob=("existence_score", lambda x: 1 - np.nanprod(1 - x))).reset_index()
